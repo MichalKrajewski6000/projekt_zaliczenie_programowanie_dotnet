@@ -1,0 +1,32 @@
+﻿@model Projekt_Blog.comment
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var session_userID = Convert.ToInt32(Session["user_id"]);
+}
+@if ((session_userID == Model.user_id) || ((string)Session["role_id"] == "1"))
+{
+    <h2>Usuń komentarz</h2>
+
+    <h3>Na pewno chcesz usunąć ten komentarz?</h3>
+    <div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Usuń" class="btn btn-danger" /> |
+                @Html.ActionLink("Anuluj", "Index")
+            </div>
+        }
+    </div>
+    <center>
+        <img src="~/Images/ds2_delete.jpg" />
+    </center>
+}
+else
+{
+    <h1 style="background-color:red;">Nie jesteś ani autorem komentarza ani administratorem!!!!!</h1>
+    <a href="@Url.Action("Index")" class="btn btn-warning">Powrót na stronę główną</a>
+}

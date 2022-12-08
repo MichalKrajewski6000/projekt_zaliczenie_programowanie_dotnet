@@ -1,0 +1,50 @@
+﻿@model Projekt_Blog.comment
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var session_userID = Convert.ToInt32(Session["user_id"]);
+}
+
+<h2>Szczegóły</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Tresc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tresc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.post.Temat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.post.Temat)
+        </dd>
+
+        <dt>
+            @Html.Label("Autor: ")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.user.nick)
+        </dd>
+        <center>
+            <img src="~/Images/post2.jpg" />
+        </center>
+    </dl>
+</div>
+<p>
+    @if ((session_userID.Equals(Model.user_id)) || ((string)Session["role_id"] == "1"))
+    {
+        @Html.ActionLink("Usuń|", "Delete", new { id = Model.id_comment })
+        @Html.ActionLink("|Edytuj", "Edit", new { id = Model.id_comment })
+    }
+
+    @Html.ActionLink(" Powrót ", "Index")
+</p>

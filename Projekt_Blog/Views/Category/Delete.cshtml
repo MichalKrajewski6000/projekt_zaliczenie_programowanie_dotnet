@@ -1,0 +1,27 @@
+﻿@model Projekt_Blog.category
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if ((string)Session["role_id"] == "1")
+{
+    <center><h2>Delete</h2></center>
+
+    <h3>Na pewno chcesz usunąć tą kategorię?</h3>
+    <div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-actions no-color">
+                <input type="submit" value="Usuń" class="btn btn-danger" /> |
+                @Html.ActionLink("Anuluj", "Index")
+            </div>
+        }
+    </div>
+}
+else
+{
+    <h1 style="background-color:red;">Nie jesteś administratorem!!!!!</h1>
+    <a href="@Url.Action("Index","Home")" class="btn btn-warning">Powrót na stronę główną</a>
+}

@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Projekt_Blog.category>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@if ((string)Session["role_id"] == "1")
+{
+    <center><h2>Kategorie</h2></center>
+    <p>
+        @Html.ActionLink("Dodaj kategorię", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Kategoria)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Opis)
+            </th>
+            <th>Akcje</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kategoria)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Opis)
+                </td>
+                <td>
+                    @Html.ActionLink("Edytuj", "Edit", new { id = item.kategoria_id }) |
+                    @Html.ActionLink("Szczegóły", "Details", new { id = item.kategoria_id }) |
+                    @Html.ActionLink("Usuń", "Delete", new { id = item.kategoria_id })
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+else
+{
+    <h1 style="background-color:red;">Nie jesteś administratorem!!!!!</h1>
+    <a href="@Url.Action("Index","Home")" class="btn btn-warning">Powrót na stronę główną</a>
+}

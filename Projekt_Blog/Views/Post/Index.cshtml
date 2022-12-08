@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Projekt_Blog.post>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<center><h2>Posty</h2></center>
+@if(Session["user_id"]!=null)
+{
+    <p>
+        @Html.ActionLink("Utwórz wątek", "Create")
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Temat)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gra)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.category.Kategoria)
+        </th>
+        <th>
+            @Html.Label("Autor")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tresc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.data_dodania)
+        </th>
+        
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Temat)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gra)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.category.Kategoria)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.user.nick)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tresc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.data_dodania)
+        </td>             
+        <td>
+            @Html.ActionLink("Czytaj", "Details", new { id=item.post_id }) |
+
+        </td>
+    </tr>
+}
+
+</table>

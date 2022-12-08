@@ -1,0 +1,81 @@
+﻿@model Projekt_Blog.post
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var session_userID = Convert.ToInt32(Session["user_id"]);
+}
+
+<h2>Szczegóły</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Temat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Temat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Gra)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gra)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tresc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tresc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.data_dodania)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.data_dodania)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.category.Kategoria)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.category.Kategoria)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.user.nick)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.user.nick)
+        </dd>
+        <center>
+            <img src="~/Images/post2.jpg" />
+        </center>
+    </dl>
+</div>
+<p>
+    <a href="@Url.Action("Index","Comment")"> Komentarze </a>
+    <br />
+    @if (Session["user_id"] != null)
+    {
+        <a href="@Url.Action("Create","Comment", new { post_id = Model.post_id })"> Dodaj komentarz </a><br />
+    }
+    @if ((session_userID.Equals(Model.user_id)) || ((string)Session["role_id"] == "1"))
+    {
+        @Html.ActionLink("Usuń|", "Delete", new { id = Model.post_id })
+        @Html.ActionLink("Edytuj", "Edit", new { id = Model.post_id })
+    }
+
+
+    @Html.ActionLink(" Powrót ", "Index")
+</p>

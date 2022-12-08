@@ -1,0 +1,42 @@
+﻿@model Projekt_Blog.role
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if ((string)Session["role_id"] == "1")
+{
+    <h2>Szczegóły</h2>
+
+    <div>
+        <h4>role</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Rola)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Rola)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.opis)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.opis)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edytuj", "Edit", new { id = Model.role_id }) |
+        @Html.ActionLink("Powrót", "Index")
+    </p>
+}
+else
+{
+    <h1 style="background-color:red;">Nie jesteś administratorem!!!!!</h1>
+    <a href="@Url.Action("Index","Home")" class="btn btn-warning">Powrót na stronę główną</a>
+}

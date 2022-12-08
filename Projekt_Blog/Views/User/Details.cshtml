@@ -1,0 +1,60 @@
+﻿@model Projekt_Blog.user
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var session_userID = Convert.ToInt32(Session["user_id"]);
+}
+
+<h2>Informacje o koncie</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nick)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nick)
+        </dd>
+        @if ((Session["user_id"].Equals(Model.user_id)) || ((string)Session["role_id"] == "1"))
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.haslo)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.haslo)
+            </dd>
+        }
+            <dt>
+                @Html.DisplayNameFor(model => model.data_rej)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.data_rej)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.role.Rola)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.role.Rola)
+            </dd>
+
+        </dl>
+    <center><img src="~/Images/bloodborne.jpg" /></center>
+</div>
+<p>
+    @if ((session_userID.Equals(Model.user_id)) || ((string)Session["role_id"] == "1"))
+    {
+        @Html.ActionLink("Edytuj konto", "Edit", new { id = Model.user_id })
+    }
+    @if ((string)Session["role_id"] == "1")
+    {
+        @Html.ActionLink("Powrót", "Index")
+    }
+
+</p>

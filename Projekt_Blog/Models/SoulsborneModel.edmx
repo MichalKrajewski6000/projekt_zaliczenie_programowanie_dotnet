@@ -1,0 +1,388 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SoulsborneModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="kategoria_id" />
+          </Key>
+          <Property Name="kategoria_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Kategoria" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Opis" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="comments">
+          <Key>
+            <PropertyRef Name="id_comment" />
+          </Key>
+          <Property Name="id_comment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="post_id" Type="int" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="Tresc" Type="text" Nullable="false" />
+        </EntityType>
+        <EntityType Name="posts">
+          <Key>
+            <PropertyRef Name="post_id" />
+          </Key>
+          <Property Name="post_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kategoria_id" Type="int" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="Temat" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="Gra" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="Tresc" Type="text" Nullable="false" />
+          <Property Name="data_dodania" Type="datetime2" Precision="0" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="role_id" />
+          </Key>
+          <Property Name="role_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Rola" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="opis" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="role_id" Type="int" Nullable="false" />
+          <Property Name="nick" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="haslo" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="data_rej" Type="date" />
+        </EntityType>
+        <Association Name="FK__comments__post_i__45F365D3">
+          <End Role="posts" Type="Self.posts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="comments" Type="Self.comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="posts">
+              <PropertyRef Name="post_id" />
+            </Principal>
+            <Dependent Role="comments">
+              <PropertyRef Name="post_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__comments__user_i__46E78A0C">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="comments" Type="Self.comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="comments">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__posts__kategoria__412EB0B6">
+          <End Role="category" Type="Self.category" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="posts" Type="Self.posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="kategoria_id" />
+            </Principal>
+            <Dependent Role="posts">
+              <PropertyRef Name="kategoria_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__posts__user_id__4222D4EF">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="posts" Type="Self.posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="posts">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__users__role_id__3D5E1FD2">
+          <End Role="role" Type="Self.role" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="role">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SoulsborneModelStoreContainer">
+          <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="comments" EntityType="Self.comments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="posts" EntityType="Self.posts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="role" EntityType="Self.role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__comments__post_i__45F365D3" Association="Self.FK__comments__post_i__45F365D3">
+            <End Role="posts" EntitySet="posts" />
+            <End Role="comments" EntitySet="comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__comments__user_i__46E78A0C" Association="Self.FK__comments__user_i__46E78A0C">
+            <End Role="users" EntitySet="users" />
+            <End Role="comments" EntitySet="comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__posts__kategoria__412EB0B6" Association="Self.FK__posts__kategoria__412EB0B6">
+            <End Role="category" EntitySet="category" />
+            <End Role="posts" EntitySet="posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__posts__user_id__4222D4EF" Association="Self.FK__posts__user_id__4222D4EF">
+            <End Role="users" EntitySet="users" />
+            <End Role="posts" EntitySet="posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__users__role_id__3D5E1FD2" Association="Self.FK__users__role_id__3D5E1FD2">
+            <End Role="role" EntitySet="role" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SoulsborneModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="kategoria_id" />
+          </Key>
+          <Property Name="kategoria_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Kategoria" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Opis" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="posts" Relationship="Self.FK__posts__kategoria__412EB0B6" FromRole="category" ToRole="posts" />
+        </EntityType>
+        <EntityType Name="comment">
+          <Key>
+            <PropertyRef Name="id_comment" />
+          </Key>
+          <Property Name="id_comment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="post_id" Type="Int32" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="Tresc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="post" Relationship="Self.FK__comments__post_i__45F365D3" FromRole="comments" ToRole="posts" />
+          <NavigationProperty Name="user" Relationship="Self.FK__comments__user_i__46E78A0C" FromRole="comments" ToRole="users" />
+        </EntityType>
+        <EntityType Name="post">
+          <Key>
+            <PropertyRef Name="post_id" />
+          </Key>
+          <Property Name="post_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kategoria_id" Type="Int32" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="Temat" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Gra" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Tresc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="data_dodania" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="category" Relationship="Self.FK__posts__kategoria__412EB0B6" FromRole="posts" ToRole="category" />
+          <NavigationProperty Name="comments" Relationship="Self.FK__comments__post_i__45F365D3" FromRole="posts" ToRole="comments" />
+          <NavigationProperty Name="user" Relationship="Self.FK__posts__user_id__4222D4EF" FromRole="posts" ToRole="users" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="role_id" />
+          </Key>
+          <Property Name="role_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Rola" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="opis" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="users" Relationship="Self.FK__users__role_id__3D5E1FD2" FromRole="role" ToRole="users" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="role_id" Type="Int32" Nullable="false" />
+          <Property Name="nick" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="haslo" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="data_rej" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="comments" Relationship="Self.FK__comments__user_i__46E78A0C" FromRole="users" ToRole="comments" />
+          <NavigationProperty Name="posts" Relationship="Self.FK__posts__user_id__4222D4EF" FromRole="users" ToRole="posts" />
+          <NavigationProperty Name="role" Relationship="Self.FK__users__role_id__3D5E1FD2" FromRole="users" ToRole="role" />
+        </EntityType>
+        <Association Name="FK__posts__kategoria__412EB0B6">
+          <End Role="category" Type="Self.category" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="posts" Type="Self.post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="kategoria_id" />
+            </Principal>
+            <Dependent Role="posts">
+              <PropertyRef Name="kategoria_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__comments__post_i__45F365D3">
+          <End Role="posts" Type="Self.post" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="comments" Type="Self.comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="posts">
+              <PropertyRef Name="post_id" />
+            </Principal>
+            <Dependent Role="comments">
+              <PropertyRef Name="post_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__comments__user_i__46E78A0C">
+          <End Role="users" Type="Self.user" Multiplicity="1" />
+          <End Role="comments" Type="Self.comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="comments">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__posts__user_id__4222D4EF">
+          <End Role="users" Type="Self.user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="posts" Type="Self.post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="posts">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__users__role_id__3D5E1FD2">
+          <End Role="role" Type="Self.role" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="users" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="role">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SoulsborneEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="categories" EntityType="Self.category" />
+          <EntitySet Name="comments" EntityType="Self.comment" />
+          <EntitySet Name="posts" EntityType="Self.post" />
+          <EntitySet Name="roles" EntityType="Self.role" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <AssociationSet Name="FK__posts__kategoria__412EB0B6" Association="Self.FK__posts__kategoria__412EB0B6">
+            <End Role="category" EntitySet="categories" />
+            <End Role="posts" EntitySet="posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__comments__post_i__45F365D3" Association="Self.FK__comments__post_i__45F365D3">
+            <End Role="posts" EntitySet="posts" />
+            <End Role="comments" EntitySet="comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__comments__user_i__46E78A0C" Association="Self.FK__comments__user_i__46E78A0C">
+            <End Role="users" EntitySet="users" />
+            <End Role="comments" EntitySet="comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__posts__user_id__4222D4EF" Association="Self.FK__posts__user_id__4222D4EF">
+            <End Role="users" EntitySet="users" />
+            <End Role="posts" EntitySet="posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__users__role_id__3D5E1FD2" Association="Self.FK__users__role_id__3D5E1FD2">
+            <End Role="role" EntitySet="roles" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SoulsborneModelStoreContainer" CdmEntityContainer="SoulsborneEntities">
+          <EntitySetMapping Name="categories">
+            <EntityTypeMapping TypeName="SoulsborneModel.category">
+              <MappingFragment StoreEntitySet="category">
+                <ScalarProperty Name="kategoria_id" ColumnName="kategoria_id" />
+                <ScalarProperty Name="Kategoria" ColumnName="Kategoria" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="comments">
+            <EntityTypeMapping TypeName="SoulsborneModel.comment">
+              <MappingFragment StoreEntitySet="comments">
+                <ScalarProperty Name="id_comment" ColumnName="id_comment" />
+                <ScalarProperty Name="post_id" ColumnName="post_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="Tresc" ColumnName="Tresc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="posts">
+            <EntityTypeMapping TypeName="SoulsborneModel.post">
+              <MappingFragment StoreEntitySet="posts">
+                <ScalarProperty Name="post_id" ColumnName="post_id" />
+                <ScalarProperty Name="kategoria_id" ColumnName="kategoria_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="Temat" ColumnName="Temat" />
+                <ScalarProperty Name="Gra" ColumnName="Gra" />
+                <ScalarProperty Name="Tresc" ColumnName="Tresc" />
+                <ScalarProperty Name="data_dodania" ColumnName="data_dodania" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="roles">
+            <EntityTypeMapping TypeName="SoulsborneModel.role">
+              <MappingFragment StoreEntitySet="role">
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="Rola" ColumnName="Rola" />
+                <ScalarProperty Name="opis" ColumnName="opis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="SoulsborneModel.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="nick" ColumnName="nick" />
+                <ScalarProperty Name="haslo" ColumnName="haslo" />
+                <ScalarProperty Name="data_rej" ColumnName="data_rej" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

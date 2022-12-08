@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Strona główna";
+}
+
+<div class="jumbotron">
+
+    <h1>Blog Soulsborne</h1>
+    @if (Session["user_id"] != null)
+    {
+        <h2>Witaj @Session["nick"].ToString()</h2>
+        <center>
+            <img src="~/Images/bonfire.gif" />
+        </center>
+    }
+
+    @if (Session["user_id"] == null)
+    {
+        
+        <p class="lead">
+            Witaj na blogu na temat gier z serii Soulsborne (Demon Souls, Trylogia Dark Souls i Bloodborne).
+            Możesz tu rozmawiać na różne tematy związane z tymi grami jak i znaleźć pomoc ze strony innych użytkowników.
+            Chwalmy Słońce i Strzeżmi się Starszej Krwi!!!
+        </p>
+        <p class="lead" id="infoLogin">Aby tworzyć wątki a także dodawać komentarze do wątków musisz mieć konto.</p>
+        <p><a href="@Url.Action("Create","User")" class="btn btn-warning btn-lg">Zarejestruj się &raquo;</a></p>
+        <p><a href="@Url.Action("Index","Login")" class="btn btn-warning btn-lg">Zaloguj się &raquo;</a></p>
+        <div class="fotorama">
+            <img src="~/Images/fotorama/demonsouls.jpg" />
+            <img src="~/Images/fotorama/darksouls.jpg" />
+            <img src="~/Images/fotorama/darksouls2.jpg" />
+            <img src="~/Images/fotorama/bloodborne_foto.jpg" />
+            <img src="~/Images/fotorama/darksouls3.jpg" />
+        </div>
+    }
+
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Posty</h2>
+        <p>
+            Spis wątków znajdujących się na blogu
+        </p>
+        <p><a class="btn btn-default" href="@Url.Action("Index","Post")">Przeglądaj &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Komentarze</h2>
+        <p>Lista komentarzy do wszystkich wątków</p>
+        <p><a class="btn btn-default" href="@Url.Action("Index","Comment")">Przeglądaj &raquo;</a></p>
+    </div>
+</div>
